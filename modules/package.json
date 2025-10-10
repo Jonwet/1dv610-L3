@@ -1,0 +1,25 @@
+{
+    "name": "1dv610-l2",
+    "version": "1.0.0",
+    "description": "",
+    "homepage": "https://github.com/Jonwet/1dv610-L2#readme",
+    "bugs": {
+        "url": "https://github.com/Jonwet/1dv610-L2/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Jonwet/1dv610-L2.git"
+    },
+    "license": "MIT",
+    "author": "",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    },
+    "devDependencies": {
+        "eslint": "^9.36.0",
+        "jest": "^30.1.3",
+        "prettier": "^3.6.2"
+    }
+}

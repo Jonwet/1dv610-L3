@@ -1,0 +1,24 @@
+{
+  "name": "1dv610-l3",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Jonwet/1dv610-L3#readme",
+  "bugs": {
+    "url": "https://github.com/Jonwet/1dv610-L3/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonwet/1dv610-L3.git"
+  },
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "eslint": "^9.36.0",
+    "prettier": "^3.6.2"
+  }
+}
