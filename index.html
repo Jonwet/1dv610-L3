@@ -19,10 +19,18 @@
             <button id="create-chart">Create</button>
         </section>
 
-        <form>
-            <input type="text" placeholder="Label" />
-            <input type="number" placeholder="Value" />
-            <button type="submit">Add Data</button>
+        <form id="data-form">
+            <input
+                id="data-label"
+                type="text"
+                placeholder="Label (or Line name)"
+            />
+            <input
+                id="data-value"
+                type="text"
+                placeholder="Value (number) or Numbers (e.g. 1, 2, 3)"
+            />
+            <button type="submit" id="add-data">Add Data</button>
         </form>
 
         <script type="module" src="./index.js"></script>

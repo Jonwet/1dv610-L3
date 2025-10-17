@@ -7,11 +7,15 @@ export default class chartView {
             chartTypeSelect: root.querySelector('#chart-type'),
             chartTitleInput: root.querySelector('#chart-title'),
             createChartButton: root.querySelector('#create-chart'),
+            dataForm: root.querySelector('#data-form'),
+            dataLabelInput: root.querySelector('#data-label'),
+            dataValueInput: root.querySelector('#data-value'),
         }
 
         this.#handlers = {
             onTypeChange: null,
             onCreate: null,
+            onAddData: null,
         }
         this.#setupEventListeners()
     }
@@ -22,11 +26,14 @@ export default class chartView {
     setOnCreateChart(handler) {
         this.#handlers.onCreate = handler
     }
+    setOnAddData(handler) {
+        this.#handlers.onAddData = handler
+    }
 
     #setupEventListeners() {
         this.#elements.chartTypeSelect.addEventListener('change', (event) => {
             const type = event.target.value
-            console.log('Chart type changed to:', type)
+            console.log('Chart type changed to:', type) // test log
             this.#handlers.onTypeChange?.(type)
         })
         this.#elements.createChartButton.addEventListener('click', (event) => {
@@ -34,8 +41,16 @@ export default class chartView {
             const type = this.#elements.chartTypeSelect.value
             const title =
                 this.#elements.chartTitleInput.value || 'Untitled Chart'
-            console.log('Creating chart with title:', { type, title })
+            console.log('Creating chart with title:', { type, title }) // test log
             this.#handlers.onCreate?.({ type, title })
+        })
+        this.#elements.dataForm.addEventListener('submit', (event) => {
+            event.preventDefault()
+            const type = this.#elements.chartTypeSelect.value
+            const label = this.#elements.dataLabelInput.value.trim()
+            const value = this.#elements.dataValueInput.value.trim()
+            console.log('Adding data:', { type, label, value }) // test log
+            this.#handlers.onAddData?.({ type, label, value })
         })
     }
 }
