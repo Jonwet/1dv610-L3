@@ -14,15 +14,15 @@ export default class chartController {
     }
 
     connectView() {
-        this.#view.bindOnChartTypeChange((type) => {})
+        // this.#view.setOnChartTypeChange((type) => {})
 
-        this.#view.bindCreateChart(({ type, title }) => {
+        this.#view.setOnCreateChart(({ type, title }) => {
             this.#handleCreateChart(type, title)
         })
     }
 
     #handleCreateChart(type, title) {
         const chart = this.#factory.createChart(type, title)
-        this.#view.renderChart(chart)
+        // this.#view.renderChart(chart) // Rendering not implemented yet
     }
 }
