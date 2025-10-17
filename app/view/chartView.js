@@ -16,14 +16,19 @@ export default class chartView {
         this.#setupEventListeners()
     }
 
-    /*     setOnChartTypeChange(handler) {
+    setOnChartTypeChange(handler) {
         this.#handlers.onTypeChange = handler
-    } */ // Ej implementerad ännu
+    }
     setOnCreateChart(handler) {
         this.#handlers.onCreate = handler
     }
 
     #setupEventListeners() {
+        this.#elements.chartTypeSelect.addEventListener('change', (event) => {
+            const type = event.target.value
+            console.log('Chart type changed to:', type)
+            this.#handlers.onTypeChange?.(type)
+        })
         this.#elements.createChartButton.addEventListener('click', (event) => {
             event.preventDefault()
             const type = this.#elements.chartTypeSelect.value
