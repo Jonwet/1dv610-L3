@@ -33,7 +33,6 @@ export default class chartView {
     #setupEventListeners() {
         this.#elements.chartTypeSelect.addEventListener('change', (event) => {
             const type = event.target.value
-            console.log('Chart type changed to:', type) // test log
             this.#handlers.onTypeChange?.(type)
         })
         this.#elements.createChartButton.addEventListener('click', (event) => {
@@ -41,7 +40,6 @@ export default class chartView {
             const type = this.#elements.chartTypeSelect.value
             const title =
                 this.#elements.chartTitleInput.value || 'Untitled Chart'
-            console.log('Creating chart with title:', { type, title }) // test log
             this.#handlers.onCreate?.({ type, title })
         })
         this.#elements.dataForm.addEventListener('submit', (event) => {
@@ -49,7 +47,6 @@ export default class chartView {
             const type = this.#elements.chartTypeSelect.value
             const label = this.#elements.dataLabelInput.value.trim()
             const value = this.#elements.dataValueInput.value.trim()
-            console.log('Adding data:', { type, label, value }) // test log
             this.#handlers.onAddData?.({ type, label, value })
         })
     }
