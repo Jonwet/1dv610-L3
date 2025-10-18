@@ -40,21 +40,14 @@ export default class chartController {
     }
 
     #handleAddData(type, label, value) {
-        try {
-            const chartData = this.#addLineEntry(label, value)
-
-            // Currently not used
-            this.#view.showCurrentChart?.({
-                title: this.#currentTitle,
-                type: this.#currentType,
-                dataPreview: chartData,
-            })
-        } catch (error) {
-            // Empty catch block because i am only testing to add data to line charts currently
+        if (type === 'line') {
+            this.#addLineEntry(label, value)
+        } else if (type === 'bar' || type === 'pie') {
+            this.#addBarOrPieEntry(label, value)
         }
     }
 
-    #parseValues(value) {
+    #parseLineValues(value) {
         const parsedValues = String(value)
             .split(',')
             .map((v) => v.trim())
@@ -63,7 +56,6 @@ export default class chartController {
         return parsedValues
     }
 
-    // Value parser for bar and pie chart, not used currently
     #parseValue(value) {
         const parsedValue = Number(value)
         if (Number.isNaN(parsedValue)) {
@@ -73,8 +65,14 @@ export default class chartController {
     }
 
     #addLineEntry(label, values) {
-        const parsedValues = this.#parseValues(values)
-        this.#currentChart.addLine(label, parsedValues)
-        console.log(`Line added: ${label}: [${parsedValues.join(', ')}]`)
+        const parsedLineValues = this.#parseLineValues(values)
+        this.#currentChart.addLine(label, parsedLineValues)
+        console.log(`Line added: ${label}: [${parsedLineValues.join(', ')}]`)
+    }
+
+    #addBarOrPieEntry(label, value) {
+        const parsedValue = this.#parseValue(value)
+        this.#currentChart.addData({ [label]: parsedValue })
+        console.log(`Entry added: ${label}: ${parsedValue}`)
     }
 }
