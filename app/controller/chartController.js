@@ -27,8 +27,7 @@ export default class chartController {
             this.#handleAddData(type, label, value)
         })
         this.#view.setOnGetLargest(() => {
-            const largest = this.#currentChart.getLargestBar()
-            console.log('Largest entry:', largest)
+            this.#handleGetLargest()
         })
     }
 
@@ -48,6 +47,16 @@ export default class chartController {
             this.#addLineEntry(label, value)
         } else if (type === 'bar' || type === 'pie') {
             this.#addBarOrPieEntry(label, value)
+        }
+    }
+
+    #handleGetLargest() {
+        if (this.#currentType === 'bar') {
+            const largestBar = this.#currentChart.getLargestBar()
+            console.log('Largest bar:', largestBar)
+        } else if (this.#currentType === 'pie') {
+            const largestSlice = this.#currentChart.getLargestSlice()
+            console.log('Largest slice:', largestSlice)
         }
     }
 
