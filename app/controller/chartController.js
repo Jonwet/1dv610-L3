@@ -26,6 +26,10 @@ export default class chartController {
         this.#view.setOnAddData(({ type, label, value }) => {
             this.#handleAddData(type, label, value)
         })
+        this.#view.setOnGetLargest(() => {
+            const largest = this.#currentChart.getLargestBar()
+            console.log('Largest entry:', largest)
+        })
     }
 
     #handleCreateChart(type, title) {
