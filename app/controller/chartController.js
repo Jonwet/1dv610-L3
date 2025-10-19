@@ -32,6 +32,9 @@ export default class chartController {
         this.#view.setOnGetSmallest(() => {
             this.#handleGetSmallest()
         })
+        this.#view.setOnSortByValue((descending = true) => {
+            this.#handleSortByValue(descending)
+        })
     }
 
     #handleCreateChart(type, title) {
@@ -70,6 +73,16 @@ export default class chartController {
         } else if (this.#currentType === 'pie') {
             const smallestSlice = this.#currentChart.getSmallestSlice()
             console.log('Smallest slice:', smallestSlice)
+        }
+    }
+
+    #handleSortByValue(descending = true) {
+        if (this.#currentType === 'bar') {
+            const sortedBars = this.#currentChart.sortBarsByValue(descending)
+            console.log('Sorted bars:', sortedBars)
+        } else if (this.#currentType === 'pie') {
+            const sortedSlices = this.#currentChart.sortSlicesByValue(descending)
+            console.log('Sorted slices:', sortedSlices)
         }
     }
 

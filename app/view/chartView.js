@@ -12,6 +12,8 @@ export default class chartView {
             dataValueInput: root.querySelector('#data-value'),
             largestButton: root.querySelector('#get-largest'),
             smallestButton: root.querySelector('#get-smallest'),
+            sortByValueButton: root.querySelector('#sort-by-value'),
+            sortOrderSelect: root.querySelector('#sort-order'),
         }
 
         this.#handlers = {
@@ -37,6 +39,9 @@ export default class chartView {
     }
     setOnGetSmallest(handler) {
         this.#handlers.onGetSmallest = handler
+    }
+    setOnSortByValue(handler) {
+        this.#handlers.onSortByValue = handler
     }
 
     #setupEventListeners() {
@@ -65,6 +70,12 @@ export default class chartView {
         this.#elements.smallestButton.addEventListener('click', (event) => {
             event.preventDefault()
             this.#handlers.onGetSmallest()
+        })
+        this.#elements.sortByValueButton.addEventListener('click', (event) => {
+            event.preventDefault()
+            const order = this.#elements.sortOrderSelect?.value || 'desc'
+            const descending = order !== 'asc'
+            this.#handlers.onSortByValue(descending)
         })
     }
 }
