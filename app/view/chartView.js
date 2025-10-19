@@ -11,6 +11,7 @@ export default class chartView {
             dataLabelInput: root.querySelector('#data-label'),
             dataValueInput: root.querySelector('#data-value'),
             largestButton: root.querySelector('#get-largest'),
+            smallestButton: root.querySelector('#get-smallest'),
         }
 
         this.#handlers = {
@@ -33,6 +34,9 @@ export default class chartView {
     }
     setOnGetLargest(handler) {
         this.#handlers.onGetLargest = handler
+    }
+    setOnGetSmallest(handler) {
+        this.#handlers.onGetSmallest = handler
     }
 
     #setupEventListeners() {
@@ -57,6 +61,10 @@ export default class chartView {
         this.#elements.largestButton.addEventListener('click', (event) => {
             event.preventDefault()
             this.#handlers.onGetLargest()
+        })
+        this.#elements.smallestButton.addEventListener('click', (event) => {
+            event.preventDefault()
+            this.#handlers.onGetSmallest()
         })
     }
 }

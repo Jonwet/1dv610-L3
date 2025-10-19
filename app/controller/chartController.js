@@ -29,6 +29,9 @@ export default class chartController {
         this.#view.setOnGetLargest(() => {
             this.#handleGetLargest()
         })
+        this.#view.setOnGetSmallest(() => {
+            this.#handleGetSmallest()
+        })
     }
 
     #handleCreateChart(type, title) {
@@ -57,6 +60,16 @@ export default class chartController {
         } else if (this.#currentType === 'pie') {
             const largestSlice = this.#currentChart.getLargestSlice()
             console.log('Largest slice:', largestSlice)
+        }
+    }
+
+    #handleGetSmallest() {
+        if (this.#currentType === 'bar') {
+            const smallestBar = this.#currentChart.getSmallestBar()
+            console.log('Smallest bar:', smallestBar)
+        } else if (this.#currentType === 'pie') {
+            const smallestSlice = this.#currentChart.getSmallestSlice()
+            console.log('Smallest slice:', smallestSlice)
         }
     }
 
