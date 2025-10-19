@@ -13,7 +13,7 @@ export default class chartView {
             largestButton: root.querySelector('#get-largest'),
             smallestButton: root.querySelector('#get-smallest'),
             sortByValueButton: root.querySelector('#sort-by-value'),
-            sortOrderSelect: root.querySelector('#sort-order'),
+            selectSortOrder: root.querySelector('#sort-order'),
         }
 
         this.#handlers = {
@@ -73,9 +73,8 @@ export default class chartView {
         })
         this.#elements.sortByValueButton.addEventListener('click', (event) => {
             event.preventDefault()
-            const order = this.#elements.sortOrderSelect?.value || 'desc'
-            const descending = order !== 'asc'
-            this.#handlers.onSortByValue(descending)
+            const sortOrder = this.#elements.selectSortOrder.value
+            this.#handlers.onSortByValue(sortOrder)
         })
     }
 }
