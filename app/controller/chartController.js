@@ -5,7 +5,6 @@ export default class chartController {
     #view
     #currentType
     #currentChart
-    #currentTitle
 
     constructor(view) {
         this.#factory = new chartFactory()
@@ -27,10 +26,10 @@ export default class chartController {
             this.#handleAddData(type, label, value)
         })
         this.#view.setOnGetLargest(() => {
-            this.#handleGetLargest()
+            this.#handleGetExtremeValues('max')
         })
         this.#view.setOnGetSmallest(() => {
-            this.#handleGetSmallest()
+            this.#handleGetExtremeValues('min')
         })
         this.#view.setOnSortByValue((sortOrder) => {
             this.#handleSortByValue(sortOrder)
@@ -40,7 +39,6 @@ export default class chartController {
     #handleCreateChart(type, title) {
         this.#currentChart = this.#factory.createChart(type, title)
         this.#currentType = type
-        this.#currentTitle = title
         // Test log
         console.log('Chart created:', {
             type,
@@ -56,23 +54,15 @@ export default class chartController {
         }
     }
 
-    #handleGetLargest() {
-        if (this.#currentType === 'bar') {
-            const largestBar = this.#currentChart.getLargestBar()
-            console.log('Largest bar:', largestBar)
-        } else if (this.#currentType === 'pie') {
-            const largestSlice = this.#currentChart.getLargestSlice()
-            console.log('Largest slice:', largestSlice)
-        }
-    }
-
-    #handleGetSmallest() {
-        if (this.#currentType === 'bar') {
-            const smallestBar = this.#currentChart.getSmallestBar()
-            console.log('Smallest bar:', smallestBar)
-        } else if (this.#currentType === 'pie') {
-            const smallestSlice = this.#currentChart.getSmallestSlice()
-            console.log('Smallest slice:', smallestSlice)
+    #handleGetExtremeValues(extremeType) {
+        if (this.#currentType === 'bar' || this.#currentType === 'pie') {
+            const extremeValues = this.#currentChart.getExtremeValues(
+                extremeType === 'max' ? 'max' : 'min',
+            )
+            console.log(
+                extremeType === 'max' ? 'Largest:' : 'Smallest:',
+                extremeValues,
+            )
         }
     }
 
@@ -101,9 +91,6 @@ export default class chartController {
 
     #parseValue(value) {
         const parsedValue = Number(value)
-        if (Number.isNaN(parsedValue)) {
-            throw new Error(`Value must be a number`)
-        }
         return parsedValue
     }
 
