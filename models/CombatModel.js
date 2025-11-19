@@ -82,7 +82,7 @@ export default class CombatModel {
         return this.combat !== null
     }
 
-    isActive() {
+    isCombatActive() {
         if (!this.combat) return false
         return this.combat.getState().isActive
     }

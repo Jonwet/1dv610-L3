@@ -10,4 +10,33 @@ export default class GameModel {
         this.roundNumber = 0
         this.winner = null
     }
+
+    increaseRound() {
+        this.roundNumber++
+    }
+
+    endGame(winner) {
+        this.isActive = false
+        this.winner = winner
+    }
+
+    getRoundNumber() {
+        return this.roundNumber
+    }
+
+    getIsGameActive() {
+        return this.isActive
+    }
+
+    getWinner() {
+        return this.winner
+    }
+
+    getGameState() {
+        return {
+            isActive: this.isActive,
+            roundNumber: this.roundNumber,
+            winner: this.winner,
+        }
+    }
 }
