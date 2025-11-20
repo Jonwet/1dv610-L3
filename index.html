@@ -11,11 +11,23 @@
         <span class="label">Current Turn:</span>
         <span id="current-turn">-</span>
 
-        <div class="controls">
+        <div class="combat">
+            <div class="team-container">
+                <h2>Player</h2>
+                <div id="player-team" class="team"></div>
+            </div>
+
+            <div class="team-container">
+                <h2>Enemy</h2>
+                <div id="enemy-team" class="team"></div>
+        </div>
+
+        <div class="controls">  
             <button id="start-button">Start Game</button>
             <button id="attack-button">Attack</button>
             <button id="defend-button">Defend</button>
             <button id="restart-button">Restart Game</button>
         </div>
+        <script type="module" src="test.js"></script>
     </body>
 </html>
