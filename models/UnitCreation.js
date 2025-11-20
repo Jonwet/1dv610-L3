@@ -31,7 +31,3 @@ export default class UnitCreation {
         return [this.createEnemy()]
     }
 }
-
-// Test
-const units = new UnitCreation().createPlayerTeam()
-console.log(units)

@@ -8,19 +8,14 @@
     <body>
         <span>Round:</span>
         <span id="round-number">0</span>
+        <span class="label">Current Turn:</span>
+        <span id="current-turn">-</span>
 
-        <button id="test-button">Set Round Number to 2</button>
-
-        <script type="module">
-            import GameStatusView from './views/GameStatusView.js'
-
-            const gameStatusView = new GameStatusView()
-
-            document
-                .getElementById('test-button')
-                .addEventListener('click', () => {
-                    gameStatusView.updateRoundNumber(2)
-                })
-        </script>
+        <div class="controls">
+            <button id="start-button">Start Game</button>
+            <button id="attack-button">Attack</button>
+            <button id="defend-button">Defend</button>
+            <button id="restart-button">Restart Game</button>
+        </div>
     </body>
 </html>
