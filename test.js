@@ -1,4 +1,7 @@
 import CombatantView from './views/CombatantView.js'
+import EventController from './controllers/EventController.js'
+import GameModel from './models/GameModel.js'
+import CombatModel from './models/CombatModel.js'
 
 const view = new CombatantView()
 
