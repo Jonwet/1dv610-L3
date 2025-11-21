@@ -1,5 +1,6 @@
 export default class EventController {
-    constructor(gameModel, combatModel) {
+    constructor(callbacks, gameModel, combatModel) {
+        this.callbacks = callbacks
         this.gameModel = gameModel
         this.combatModel = combatModel
 
@@ -28,7 +29,7 @@ export default class EventController {
     }
 
     handleStartClick() {
-        console.log('Start button clicked')
+        this.callbacks.onStartGame()
     }
 
     handleAttackClick() {
