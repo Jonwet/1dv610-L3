@@ -78,7 +78,9 @@ export default class GameController {
         if (this.combatModel.checkBattleEnd()) {
             this.endGame()
         }
-        this.handleAITurn()
+        setTimeout(() => {
+            this.handleAITurn()
+        }, 3000)
     }
 
     handlePlayerDefend() {
@@ -88,7 +90,9 @@ export default class GameController {
         this.gameModel.increaseRound()
         this.combatModel.advanceTurn()
         this.updateViews()
-        this.handleAITurn()
+        setTimeout(() => {
+            this.handleAITurn()
+        }, 3000)
     }
 
     handleAITurn() {

@@ -5,6 +5,9 @@ export default class CombatantView {
     }
 
     renderCombatants(combatants) {
+        this.playerContainer.innerHTML = ''
+        this.enemyContainer.innerHTML = ''
+
         const players = combatants.filter(
             (combatant) => combatant.team === 'Player',
         )
