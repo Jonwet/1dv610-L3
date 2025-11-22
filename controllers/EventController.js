@@ -37,10 +37,10 @@ export default class EventController {
     }
 
     handleDefendClick() {
-        console.log('Defend button clicked')
+        this.callbacks.onDefend()
     }
 
     handleRestartClick() {
-        console.log('Restart button clicked')
+        this.callbacks.onRestart()
     }
 }

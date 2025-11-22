@@ -60,4 +60,12 @@ export default class GameController {
             `${this.player.name} attacked ${this.enemy.name} for ${damage} damage`,
         )
     }
+
+    handlePlayerDefend() {
+        console.log('Player defended')
+
+        this.combatModel.executeDefend(this.player.id)
+
+        this.logView.addLogMessage(`${this.player.name} is defending`)
+    }
 }
