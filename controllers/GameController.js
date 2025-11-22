@@ -4,6 +4,7 @@ import EventController from './EventController.js'
 import UnitCreation from '../models/UnitCreation.js'
 import LogView from '../views/LogView.js'
 import CombatantView from '../views/CombatantView.js'
+import CombatAction from '../module/CombatAction.js'
 
 export default class GameController {
     constructor() {
@@ -13,6 +14,11 @@ export default class GameController {
 
         this.logView = new LogView()
         this.combatantView = new CombatantView()
+
+        this.player = null
+        this.enemy = null
+
+        this.attackAction = new CombatAction({ name: 'Attack', accuracy: 0.8 })
 
         this.eventController = new EventController(
             {
@@ -36,9 +42,22 @@ export default class GameController {
 
         this.combatModel.initializeCombat(playerUnit, enemyUnit)
 
-        const player = this.combatModel.getPlayer()
-        const enemy = this.combatModel.getEnemy()
+        this.player = this.combatModel.getPlayer()
+        this.enemy = this.combatModel.getEnemy()
 
-        this.combatantView.renderCombatants([player, enemy])
+        this.combatantView.renderCombatants([this.player, this.enemy])
+    }
+
+    handlePlayerAttack() {
+        console.log('Player attacked')
+
+        const damage = this.combatModel.executeAttack(
+            this.enemy.id,
+            this.attackAction,
+        )
+
+        this.logView.addLogMessage(
+            `${this.player.name} attacked ${this.enemy.name} for ${damage} damage`,
+        )
     }
 }

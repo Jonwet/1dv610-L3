@@ -33,7 +33,7 @@ export default class EventController {
     }
 
     handleAttackClick() {
-        console.log('Attack button clicked')
+        this.callbacks.onPlayerAttack()
     }
 
     handleDefendClick() {
