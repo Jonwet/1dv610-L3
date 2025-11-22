@@ -118,7 +118,7 @@ export default class Combatant {
 
     #applyDamage(amount) {
         this.#validateAmountNumber(amount)
-        this.currentHealth = this.currentHealth - amount
+        this.currentHealth = Math.max(0, this.currentHealth - amount)
     }
 
     #die() {

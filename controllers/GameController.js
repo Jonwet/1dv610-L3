@@ -67,6 +67,10 @@ export default class GameController {
             `${this.player.name} attacked ${this.enemy.name} for ${damage} damage`,
         )
         this.updateViews()
+
+        if (this.combatModel.checkBattleEnd()) {
+            this.endGame()
+        }
         this.handleAITurn()
     }
 
@@ -93,7 +97,12 @@ export default class GameController {
         this.logView.addLogMessage(
             `${this.enemy.name} attacked ${decision.target.name} for ${damage} damage`,
         )
+
         this.updateViews()
+
+        if (this.combatModel.checkBattleEnd()) {
+            this.endGame()
+        }
     }
 
     updateViews() {
@@ -103,5 +112,17 @@ export default class GameController {
 
         this.statusView.updateRoundNumber(this.gameModel.getRoundNumber())
         this.statusView.updateCurrentTurn(currentCombatant.name)
+    }
+
+    endGame() {
+        const winner = this.combatModel.getWinner()
+
+        this.gameModel.endGame(winner)
+
+        if (winner === 'Player') {
+            this.logView.addLogMessage('You win!')
+        } else if (winner === 'Enemy') {
+            this.logView.addLogMessage('You lose!')
+        }
     }
 }
