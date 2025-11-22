@@ -56,8 +56,6 @@ export default class GameController {
     }
 
     handlePlayerAttack() {
-        console.log('Player attacked')
-
         const damage = this.combatModel.executeAttack(
             this.enemy.id,
             this.attackAction,
@@ -75,8 +73,6 @@ export default class GameController {
     }
 
     handlePlayerDefend() {
-        console.log('Player defended')
-
         this.combatModel.executeDefend(this.player.id)
 
         this.logView.addLogMessage(`${this.player.name} is defending`)
@@ -85,8 +81,6 @@ export default class GameController {
     }
 
     handleAITurn() {
-        console.log('AI turn')
-
         const decision = this.aiModel.chooseAction()
 
         const damage = this.combatModel.executeAttack(
