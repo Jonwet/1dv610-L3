@@ -5,8 +5,12 @@ export default class CombatantView {
     }
 
     renderCombatants(combatants) {
-        const players = combatants.filter((c) => c.team === 'Player')
-        const enemies = combatants.filter((c) => c.team === 'Enemy')
+        const players = combatants.filter(
+            (combatant) => combatant.team === 'Player',
+        )
+        const enemies = combatants.filter(
+            (combatant) => combatant.team === 'Enemy',
+        )
 
         players.forEach((combatant) => {
             const combatantElement = this.createCombatantElement(combatant)

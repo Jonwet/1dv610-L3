@@ -22,12 +22,4 @@ export default class UnitCreation {
             speed: 10,
         }
     }
-
-    createPlayerTeam() {
-        return [this.createHero()]
-    }
-
-    createEnemyTeam() {
-        return [this.createEnemy()]
-    }
 }

@@ -20,8 +20,4 @@ export default class LogView {
     scrollToBottom() {
         this.logContainer.scrollTop = this.logContainer.scrollHeight
     }
-
-    addLogMessages(messages) {
-        messages.forEach((message) => this.addLogMessage(message))
-    }
 }

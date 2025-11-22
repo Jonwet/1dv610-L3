@@ -31,12 +31,4 @@ export default class GameModel {
     getWinner() {
         return this.winner
     }
-
-    getGameState() {
-        return {
-            isActive: this.isActive,
-            roundNumber: this.roundNumber,
-            winner: this.winner,
-        }
-    }
 }

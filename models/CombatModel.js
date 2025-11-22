@@ -38,20 +38,12 @@ export default class CombatModel {
         return this.combat.getState().currentCombatant
     }
 
-    getAllCombatants() {
-        return this.combat.getState().combatants
-    }
-
     getPlayer() {
         return this.player
     }
 
     getEnemy() {
         return this.enemy
-    }
-
-    getCombatLog() {
-        return this.combat.getCombatLog()
     }
 
     getWinner() {
@@ -61,18 +53,5 @@ export default class CombatModel {
     isPlayerTurn() {
         const current = this.getCurrentCombatant()
         return current && current.team === 'Player'
-    }
-
-    getCombatantById(id) {
-        return this.getAllCombatants().find((c) => c.id === id)
-    }
-
-    isInitialized() {
-        return this.combat !== null
-    }
-
-    isCombatActive() {
-        if (!this.combat) return false
-        return this.combat.getState().isActive
     }
 }
