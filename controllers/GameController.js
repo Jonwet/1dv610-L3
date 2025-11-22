@@ -37,6 +37,7 @@ export default class GameController {
     }
 
     startNewGame() {
+        this.logView.clearLog()
         this.logView.addLogMessage('New game started!')
 
         this.gameModel.startGame()
@@ -61,9 +62,17 @@ export default class GameController {
             this.attackAction,
         )
 
-        this.logView.addLogMessage(
-            `${this.player.name} attacked ${this.enemy.name} for ${damage} damage`,
-        )
+        if (damage === 0) {
+            this.logView.addLogMessage(
+                `${this.player.name} attacked ${this.enemy.name} but missed!`,
+            )
+        } else {
+            this.logView.addLogMessage(
+                `${this.player.name} attacked ${this.enemy.name} for ${damage} damage`,
+            )
+        }
+        this.gameModel.increaseRound()
+        this.combatModel.advanceTurn()
         this.updateViews()
 
         if (this.combatModel.checkBattleEnd()) {
@@ -76,6 +85,8 @@ export default class GameController {
         this.combatModel.executeDefend(this.player.id)
 
         this.logView.addLogMessage(`${this.player.name} is defending`)
+        this.gameModel.increaseRound()
+        this.combatModel.advanceTurn()
         this.updateViews()
         this.handleAITurn()
     }
@@ -88,10 +99,18 @@ export default class GameController {
             decision.action,
         )
 
-        this.logView.addLogMessage(
-            `${this.enemy.name} attacked ${decision.target.name} for ${damage} damage`,
-        )
+        if (damage === 0) {
+            this.logView.addLogMessage(
+                `${this.enemy.name} attacked ${decision.target.name} but missed!`,
+            )
+        } else {
+            this.logView.addLogMessage(
+                `${this.enemy.name} attacked ${decision.target.name} for ${damage} damage`,
+            )
+        }
 
+        this.gameModel.increaseRound()
+        this.combatModel.advanceTurn()
         this.updateViews()
 
         if (this.combatModel.checkBattleEnd()) {
