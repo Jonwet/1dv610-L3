@@ -5,6 +5,7 @@ import UnitCreation from '../models/UnitCreation.js'
 import LogView from '../views/LogView.js'
 import CombatantView from '../views/CombatantView.js'
 import CombatAction from '../module/CombatAction.js'
+import AIModel from '../models/AIModel.js'
 
 export default class GameController {
     constructor() {
@@ -17,6 +18,7 @@ export default class GameController {
 
         this.player = null
         this.enemy = null
+        this.aiModel = null
 
         this.attackAction = new CombatAction({ name: 'Attack', accuracy: 0.8 })
 
@@ -42,6 +44,8 @@ export default class GameController {
 
         this.combatModel.initializeCombat(playerUnit, enemyUnit)
 
+        this.aiModel = new AIModel(this.combatModel, [this.attackAction])
+
         this.player = this.combatModel.getPlayer()
         this.enemy = this.combatModel.getEnemy()
 
@@ -59,6 +63,7 @@ export default class GameController {
         this.logView.addLogMessage(
             `${this.player.name} attacked ${this.enemy.name} for ${damage} damage`,
         )
+        this.handleAITurn()
     }
 
     handlePlayerDefend() {
@@ -67,5 +72,22 @@ export default class GameController {
         this.combatModel.executeDefend(this.player.id)
 
         this.logView.addLogMessage(`${this.player.name} is defending`)
+
+        this.handleAITurn()
+    }
+
+    handleAITurn() {
+        console.log('AI turn')
+
+        const decision = this.aiModel.chooseAction()
+
+        const damage = this.combatModel.executeAttack(
+            decision.target.id,
+            decision.action,
+        )
+
+        this.logView.addLogMessage(
+            `${this.enemy.name} attacked ${decision.target.name} for ${damage} damage`,
+        )
     }
 }
