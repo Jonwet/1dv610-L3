@@ -29,7 +29,9 @@ export default class EventController {
     }
 
     handleStartClick() {
-        this.callbacks.onStartGame()
+        if (!this.gameModel.getIsGameActive()) {
+            this.callbacks.onStartGame()
+        }
     }
 
     handleAttackClick() {
@@ -41,6 +43,8 @@ export default class EventController {
     }
 
     handleRestartClick() {
-        this.callbacks.onRestart()
+        if (!this.gameModel.getIsGameActive()) {
+            this.callbacks.onRestart()
+        }
     }
 }

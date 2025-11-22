@@ -6,6 +6,7 @@ import LogView from '../views/LogView.js'
 import CombatantView from '../views/CombatantView.js'
 import CombatAction from '../module/CombatAction.js'
 import AIModel from '../models/AIModel.js'
+import GameStatusView from '../views/GameStatusView.js'
 
 export default class GameController {
     constructor() {
@@ -15,6 +16,7 @@ export default class GameController {
 
         this.logView = new LogView()
         this.combatantView = new CombatantView()
+        this.statusView = new GameStatusView()
 
         this.player = null
         this.enemy = null
@@ -50,6 +52,7 @@ export default class GameController {
         this.enemy = this.combatModel.getEnemy()
 
         this.combatantView.renderCombatants([this.player, this.enemy])
+        this.updateViews()
     }
 
     handlePlayerAttack() {
@@ -63,6 +66,7 @@ export default class GameController {
         this.logView.addLogMessage(
             `${this.player.name} attacked ${this.enemy.name} for ${damage} damage`,
         )
+        this.updateViews()
         this.handleAITurn()
     }
 
@@ -72,7 +76,7 @@ export default class GameController {
         this.combatModel.executeDefend(this.player.id)
 
         this.logView.addLogMessage(`${this.player.name} is defending`)
-
+        this.updateViews()
         this.handleAITurn()
     }
 
@@ -89,5 +93,15 @@ export default class GameController {
         this.logView.addLogMessage(
             `${this.enemy.name} attacked ${decision.target.name} for ${damage} damage`,
         )
+        this.updateViews()
+    }
+
+    updateViews() {
+        const currentCombatant = this.combatModel.getCurrentCombatant()
+
+        this.combatantView.updateCombatants([this.player, this.enemy])
+
+        this.statusView.updateRoundNumber(this.gameModel.getRoundNumber())
+        this.statusView.updateCurrentTurn(currentCombatant.name)
     }
 }
