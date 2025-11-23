@@ -53,6 +53,10 @@ export default class CombatModel {
         return this.#combatSystem.getWinner()
     }
 
+    getCombatSystem() {
+        return this.#combatSystem
+    }
+
     isPlayerTurn() {
         const current = this.getCurrentCombatant()
         return current && current.team === 'Player'

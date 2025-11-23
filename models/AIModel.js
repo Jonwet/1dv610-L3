@@ -1,17 +1,22 @@
 import AIController from '../module/AIController.js'
 
 export default class AIModel {
+    #combatModel
+    #aiController
     constructor(combatModel, actions) {
-        this.combatModel = combatModel
-        this.aiController = new AIController(combatModel.combatSystem, actions)
+        this.#combatModel = combatModel
+        this.#aiController = new AIController(
+            combatModel.getCombatSystem(),
+            actions,
+        )
     }
 
     chooseAction() {
-        const enemy = this.combatModel.getEnemy()
+        const enemy = this.#combatModel.getEnemy()
 
         if (!enemy || !enemy.isAlive) {
             return null
         }
-        return this.aiController.chooseAction(enemy)
+        return this.#aiController.chooseAction(enemy)
     }
 }
