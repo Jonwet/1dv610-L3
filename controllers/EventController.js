@@ -1,3 +1,6 @@
+/**
+ * Controller for handling user events and interactions.
+ */
 export default class EventController {
     #callbacks
     #gameModel
@@ -6,6 +9,9 @@ export default class EventController {
     #defendButton
     #restartButton
 
+    /**
+     * Initializes the event controller and sets up event listeners for user interactions.
+     */
     constructor(callbacks, gameModel) {
         this.#callbacks = callbacks
         this.#gameModel = gameModel

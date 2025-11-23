@@ -8,6 +8,9 @@ import CombatAction from '../module/CombatAction.js'
 import AIModel from '../models/AIModel.js'
 import GameStatusView from '../views/GameStatusView.js'
 
+/**
+ * Main controller for the game, managing game flow and interactions between models and views.
+ */
 export default class GameController {
     #gameModel
     #combatModel
@@ -22,6 +25,9 @@ export default class GameController {
     #isProcessingTurn
     #aiTurnTimeout
 
+    /**
+     * Initializes the game controller and sets up the initial game state.
+     */
     constructor() {
         this.#gameModel = new GameModel()
         this.#combatModel = new CombatModel()
@@ -52,6 +58,9 @@ export default class GameController {
         this.#aiTurnTimeout = null
     }
 
+    /**
+     * Starts a new game by resetting the game state and initializing combatants.
+     */
     startNewGame() {
         if (this.#aiTurnTimeout) {
             clearTimeout(this.#aiTurnTimeout)
@@ -77,6 +86,9 @@ export default class GameController {
         this.#updateViews()
     }
 
+    /**
+     * Handles the player's attack action during their turn.
+     */
     handlePlayerAttack() {
         if (this.#isProcessingTurn) {
             return
@@ -109,6 +121,9 @@ export default class GameController {
         }, 1000)
     }
 
+    /**
+     * Handles the player's defend action during their turn.
+     */
     handlePlayerDefend() {
         if (this.#isProcessingTurn) {
             return

@@ -1,11 +1,22 @@
+/**
+ * CombatantView is responsible for rendering combatants in the game UI
+ */
 export default class CombatantView {
     #playerContainer
     #enemyContainer
+
+    /**
+     * Initializes the CombatantView by selecting the player and enemy team containers from the DOM.
+     */
     constructor() {
         this.#playerContainer = document.getElementById('player-team')
         this.#enemyContainer = document.getElementById('enemy-team')
     }
 
+    /**
+     * Renders the combatants in their respective team containers.
+     * @param {Array} combatants - The list of combatant objects to render.
+     */
     renderCombatants(combatants) {
         this.#playerContainer.innerHTML = ''
         this.#enemyContainer.innerHTML = ''
@@ -28,30 +39,10 @@ export default class CombatantView {
         })
     }
 
-    #createCombatantElement(combatant) {
-        const combatantElement = document.createElement('div')
-        combatantElement.className = 'combatant-element'
-        combatantElement.dataset.id = combatant.id
-
-        combatantElement.innerHTML = `
-            <div class="combatant-name">${combatant.name}</div>
-
-            
-            <div class="hp-container">
-                <div class="hp-label">HP: ${combatant.currentHealth}/${combatant.maxHealth}</div>
-            </div>
-            
-            <div class="stats">
-                <div class="stat">ATK: ${combatant.attackPower}</div>
-                <div class="stat">DEF: ${combatant.defense}</div>
-                <div class="stat">SPD: ${combatant.speed}</div>
-            </div>
-            
-            ${combatant.isDefending ? '<div class="defending-indicator">DEFENDING</div>' : ''}
-        `
-        return combatantElement
-    }
-
+    /**
+     * Updates the combatants' display based on their current state.
+     * @param {Array} combatants - The list of combatant objects to update.
+     */
     updateCombatants(combatants) {
         combatants.forEach((combatant) => {
             const combatantElement = document.querySelector(
@@ -84,5 +75,29 @@ export default class CombatantView {
                 }
             }
         })
+    }
+
+    #createCombatantElement(combatant) {
+        const combatantElement = document.createElement('div')
+        combatantElement.className = 'combatant-element'
+        combatantElement.dataset.id = combatant.id
+
+        combatantElement.innerHTML = `
+            <div class="combatant-name">${combatant.name}</div>
+
+            
+            <div class="hp-container">
+                <div class="hp-label">HP: ${combatant.currentHealth}/${combatant.maxHealth}</div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">ATK: ${combatant.attackPower}</div>
+                <div class="stat">DEF: ${combatant.defense}</div>
+                <div class="stat">SPD: ${combatant.speed}</div>
+            </div>
+            
+            ${combatant.isDefending ? '<div class="defending-indicator">DEFENDING</div>' : ''}
+        `
+        return combatantElement
     }
 }

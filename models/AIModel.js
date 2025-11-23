@@ -1,5 +1,8 @@
 import AIController from '../module/AIController.js'
 
+/**
+ * Model representing the AI behavior in combat.
+ */
 export default class AIModel {
     #combatModel
     #aiController
@@ -11,6 +14,9 @@ export default class AIModel {
         )
     }
 
+    /**
+     * Chooses an action for the AI-controlled enemy during combat.
+     */
     chooseAction() {
         const enemy = this.#combatModel.getEnemy()
 

@@ -1,4 +1,11 @@
+/**
+ * UnitCreation is responsible for creating game units such as heroes and enemies
+ */
 export default class UnitCreation {
+    /**
+     * Creates a hero unit
+     * @returns {Object} The hero unit object
+     */
     createHero() {
         return {
             id: 1,
@@ -11,6 +18,10 @@ export default class UnitCreation {
         }
     }
 
+    /**
+     * Creates an enemy unit
+     * @returns {Object} The enemy unit object
+     */
     createEnemy() {
         return {
             id: 2,
