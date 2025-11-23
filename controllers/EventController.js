@@ -1,50 +1,56 @@
 export default class EventController {
-    constructor(callbacks, gameModel, combatModel) {
-        this.callbacks = callbacks
-        this.gameModel = gameModel
-        this.combatModel = combatModel
+    #callbacks
+    #gameModel
+    #startButton
+    #attackButton
+    #defendButton
+    #restartButton
 
-        this.startButton = document.getElementById('start-button')
-        this.attackButton = document.getElementById('attack-button')
-        this.defendButton = document.getElementById('defend-button')
-        this.restartButton = document.getElementById('restart-button')
+    constructor(callbacks, gameModel) {
+        this.#callbacks = callbacks
+        this.#gameModel = gameModel
 
-        this.setupEventListeners()
+        this.#startButton = document.getElementById('start-button')
+        this.#attackButton = document.getElementById('attack-button')
+        this.#defendButton = document.getElementById('defend-button')
+        this.#restartButton = document.getElementById('restart-button')
+
+        this.#setupEventListeners()
     }
 
-    setupEventListeners() {
-        this.startButton.addEventListener('click', () => {
-            this.handleStartClick()
+    #setupEventListeners() {
+        this.#startButton.addEventListener('click', () => {
+            this.#handleStartClick()
         })
 
-        this.attackButton.addEventListener('click', () => {
-            this.handleAttackClick()
+        this.#attackButton.addEventListener('click', () => {
+            this.#handleAttackClick()
         })
-        this.defendButton.addEventListener('click', () => {
-            this.handleDefendClick()
+        this.#defendButton.addEventListener('click', () => {
+            this.#handleDefendClick()
         })
-        this.restartButton.addEventListener('click', () => {
-            this.handleRestartClick()
+        this.#restartButton.addEventListener('click', () => {
+            this.#handleRestartClick()
         })
     }
 
-    handleStartClick() {
-        if (!this.gameModel.getIsGameActive()) {
-            this.callbacks.onStartGame()
+    #handleStartClick() {
+        if (!this.#gameModel.getIsGameActive()) {
+            this.#callbacks.onStartGame()
         }
     }
 
-    handleAttackClick() {
-        this.callbacks.onPlayerAttack()
+    #handleAttackClick() {
+        this.#callbacks.onPlayerAttack()
     }
 
-    handleDefendClick() {
-        this.callbacks.onDefend()
+    #handleDefendClick() {
+        this.#callbacks.onDefend()
     }
 
-    handleRestartClick() {
-        if (!this.gameModel.getIsGameActive()) {
-            this.callbacks.onRestart()
+    #handleRestartClick() {
+        if (!this.#gameModel.getIsGameActive()) {
+            this.#callbacks.onRestart()
         }
     }
 }
