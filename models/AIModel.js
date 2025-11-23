@@ -3,7 +3,7 @@ import AIController from '../module/AIController.js'
 export default class AIModel {
     constructor(combatModel, actions) {
         this.combatModel = combatModel
-        this.aiController = new AIController(combatModel.combat, actions)
+        this.aiController = new AIController(combatModel.combatSystem, actions)
     }
 
     chooseAction() {

@@ -3,39 +3,39 @@ import Combatant from '../module/Combatant.js'
 
 export default class CombatModel {
     constructor() {
-        this.combat = null
+        this.combatSystem = null
         this.player = null
         this.enemy = null
     }
 
     initializeCombat(playerUnit, enemyUnit) {
-        this.combat = new CombatSystem()
+        this.combatSystem = new CombatSystem()
 
         this.player = new Combatant(playerUnit)
         this.enemy = new Combatant(enemyUnit)
 
         const allCombatants = [this.player, this.enemy]
-        this.combat.startCombat(allCombatants)
+        this.combatSystem.startCombat(allCombatants)
     }
 
     executeAttack(targetId, action) {
-        return this.combat.executeAttack(targetId, action)
+        return this.combatSystem.executeAttack(targetId, action)
     }
 
     executeDefend(unitId) {
-        return this.combat.executeDefend(unitId)
+        return this.combatSystem.executeDefend(unitId)
     }
 
     advanceTurn() {
-        return this.combat.nextUnitTurn()
+        return this.combatSystem.nextUnitTurn()
     }
 
     checkBattleEnd() {
-        return this.combat.checkBattleEnd()
+        return this.combatSystem.checkBattleEnd()
     }
 
     getCurrentCombatant() {
-        return this.combat.getState().currentCombatant
+        return this.combatSystem.getState().currentCombatant
     }
 
     getPlayer() {
@@ -47,7 +47,7 @@ export default class CombatModel {
     }
 
     getWinner() {
-        return this.combat.getWinner()
+        return this.combatSystem.getWinner()
     }
 
     isPlayerTurn() {

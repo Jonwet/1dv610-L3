@@ -34,9 +34,17 @@ export default class GameController {
             this.gameModel,
             this.combatModel,
         )
+
+        this.isProcessingTurn = false
+        this.aiTurnTimeout = null
     }
 
     startNewGame() {
+        if (this.aiTurnTimeout) {
+            clearTimeout(this.aiTurnTimeout)
+            this.aiTurnTimeout = null
+        }
+        this.isProcessingTurn = false
         this.logView.clearLog()
         this.logView.addLogMessage('New game started!')
 
@@ -57,6 +65,10 @@ export default class GameController {
     }
 
     handlePlayerAttack() {
+        if (this.isProcessingTurn) {
+            return
+        }
+        this.isProcessingTurn = true
         const damage = this.combatModel.executeAttack(
             this.enemy.id,
             this.attackAction,
@@ -77,22 +89,28 @@ export default class GameController {
 
         if (this.combatModel.checkBattleEnd()) {
             this.endGame()
+            this.isProcessingTurn = false
         }
-        setTimeout(() => {
+        this.aiTurnTimeout = setTimeout(() => {
             this.handleAITurn()
-        }, 3000)
+        }, 1000)
     }
 
     handlePlayerDefend() {
+        if (this.isProcessingTurn) {
+            return
+        }
+        this.isProcessingTurn = true
+
         this.combatModel.executeDefend(this.player.id)
 
         this.logView.addLogMessage(`${this.player.name} is defending`)
         this.gameModel.increaseRound()
         this.combatModel.advanceTurn()
         this.updateViews()
-        setTimeout(() => {
+        this.aiTurnTimeout = setTimeout(() => {
             this.handleAITurn()
-        }, 3000)
+        }, 1000)
     }
 
     handleAITurn() {
@@ -118,8 +136,10 @@ export default class GameController {
         this.updateViews()
 
         if (this.combatModel.checkBattleEnd()) {
+            this.isProcessingTurn = false
             this.endGame()
         }
+        this.isProcessingTurn = false
     }
 
     updateViews() {
@@ -132,6 +152,10 @@ export default class GameController {
     }
 
     endGame() {
+        if (this.aiTurnTimeout) {
+            clearTimeout(this.aiTurnTimeout)
+            this.aiTurnTimeout = null
+        }
         const winner = this.combatModel.getWinner()
 
         this.gameModel.endGame(winner)
