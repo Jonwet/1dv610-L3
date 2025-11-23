@@ -9,20 +9,33 @@ import AIModel from '../models/AIModel.js'
 import GameStatusView from '../views/GameStatusView.js'
 
 export default class GameController {
+    #gameModel
+    #combatModel
+    #unitCreation
+    #logView
+    #combatantView
+    #statusView
+    #player
+    #enemy
+    #aiModel
+    #attackAction
+    #isProcessingTurn
+    #aiTurnTimeout
+
     constructor() {
-        this.gameModel = new GameModel()
-        this.combatModel = new CombatModel()
-        this.unitCreation = new UnitCreation()
+        this.#gameModel = new GameModel()
+        this.#combatModel = new CombatModel()
+        this.#unitCreation = new UnitCreation()
 
-        this.logView = new LogView()
-        this.combatantView = new CombatantView()
-        this.statusView = new GameStatusView()
+        this.#logView = new LogView()
+        this.#combatantView = new CombatantView()
+        this.#statusView = new GameStatusView()
 
-        this.player = null
-        this.enemy = null
-        this.aiModel = null
+        this.#player = null
+        this.#enemy = null
+        this.#aiModel = null
 
-        this.attackAction = new CombatAction({ name: 'Attack', accuracy: 0.8 })
+        this.#attackAction = new CombatAction({ name: 'Attack', accuracy: 0.8 })
 
         this.eventController = new EventController(
             {
@@ -31,139 +44,139 @@ export default class GameController {
                 onDefend: () => this.handlePlayerDefend(),
                 onRestart: () => this.startNewGame(),
             },
-            this.gameModel,
-            this.combatModel,
+            this.#gameModel,
+            this.#combatModel,
         )
 
-        this.isProcessingTurn = false
-        this.aiTurnTimeout = null
+        this.#isProcessingTurn = false
+        this.#aiTurnTimeout = null
     }
 
     startNewGame() {
-        if (this.aiTurnTimeout) {
-            clearTimeout(this.aiTurnTimeout)
-            this.aiTurnTimeout = null
+        if (this.#aiTurnTimeout) {
+            clearTimeout(this.#aiTurnTimeout)
+            this.#aiTurnTimeout = null
         }
-        this.isProcessingTurn = false
-        this.logView.clearLog()
-        this.logView.addLogMessage('New game started!')
+        this.#isProcessingTurn = false
+        this.#logView.clearLog()
+        this.#logView.addLogMessage('New game started!')
 
-        this.gameModel.startGame()
+        this.#gameModel.startGame()
 
-        const playerUnit = this.unitCreation.createHero()
-        const enemyUnit = this.unitCreation.createEnemy()
+        const playerUnit = this.#unitCreation.createHero()
+        const enemyUnit = this.#unitCreation.createEnemy()
 
-        this.combatModel.initializeCombat(playerUnit, enemyUnit)
+        this.#combatModel.initializeCombat(playerUnit, enemyUnit)
 
-        this.aiModel = new AIModel(this.combatModel, [this.attackAction])
+        this.#aiModel = new AIModel(this.#combatModel, [this.#attackAction])
 
-        this.player = this.combatModel.getPlayer()
-        this.enemy = this.combatModel.getEnemy()
+        this.#player = this.#combatModel.getPlayer()
+        this.#enemy = this.#combatModel.getEnemy()
 
-        this.combatantView.renderCombatants([this.player, this.enemy])
-        this.updateViews()
+        this.#combatantView.renderCombatants([this.#player, this.#enemy])
+        this.#updateViews()
     }
 
     handlePlayerAttack() {
-        if (this.isProcessingTurn) {
+        if (this.#isProcessingTurn) {
             return
         }
-        this.isProcessingTurn = true
-        const damage = this.combatModel.executeAttack(
-            this.enemy.id,
-            this.attackAction,
+        this.#isProcessingTurn = true
+        const damage = this.#combatModel.executeAttack(
+            this.#enemy.id,
+            this.#attackAction,
         )
 
         if (damage === 0) {
-            this.logView.addLogMessage(
-                `${this.player.name} attacked ${this.enemy.name} but missed!`,
+            this.#logView.addLogMessage(
+                `${this.#player.name} attacked ${this.#enemy.name} but missed!`,
             )
         } else {
-            this.logView.addLogMessage(
-                `${this.player.name} attacked ${this.enemy.name} for ${damage} damage`,
+            this.#logView.addLogMessage(
+                `${this.#player.name} attacked ${this.#enemy.name} for ${damage} damage`,
             )
         }
-        this.gameModel.increaseRound()
-        this.combatModel.advanceTurn()
-        this.updateViews()
+        this.#gameModel.increaseRound()
+        this.#combatModel.advanceTurn()
+        this.#updateViews()
 
-        if (this.combatModel.checkBattleEnd()) {
-            this.endGame()
-            this.isProcessingTurn = false
+        if (this.#combatModel.checkBattleEnd()) {
+            this.#endGame()
+            this.#isProcessingTurn = false
         }
-        this.aiTurnTimeout = setTimeout(() => {
-            this.handleAITurn()
+        this.#aiTurnTimeout = setTimeout(() => {
+            this.#handleAITurn()
         }, 1000)
     }
 
     handlePlayerDefend() {
-        if (this.isProcessingTurn) {
+        if (this.#isProcessingTurn) {
             return
         }
-        this.isProcessingTurn = true
+        this.#isProcessingTurn = true
 
-        this.combatModel.executeDefend(this.player.id)
+        this.#combatModel.executeDefend(this.#player.id)
 
-        this.logView.addLogMessage(`${this.player.name} is defending`)
-        this.gameModel.increaseRound()
-        this.combatModel.advanceTurn()
-        this.updateViews()
-        this.aiTurnTimeout = setTimeout(() => {
-            this.handleAITurn()
+        this.#logView.addLogMessage(`${this.#player.name} is defending`)
+        this.#gameModel.increaseRound()
+        this.#combatModel.advanceTurn()
+        this.#updateViews()
+        this.#aiTurnTimeout = setTimeout(() => {
+            this.#handleAITurn()
         }, 1000)
     }
 
-    handleAITurn() {
-        const decision = this.aiModel.chooseAction()
+    #handleAITurn() {
+        const decision = this.#aiModel.chooseAction()
 
-        const damage = this.combatModel.executeAttack(
+        const damage = this.#combatModel.executeAttack(
             decision.target.id,
             decision.action,
         )
 
         if (damage === 0) {
-            this.logView.addLogMessage(
-                `${this.enemy.name} attacked ${decision.target.name} but missed!`,
+            this.#logView.addLogMessage(
+                `${this.#enemy.name} attacked ${decision.target.name} but missed!`,
             )
         } else {
-            this.logView.addLogMessage(
-                `${this.enemy.name} attacked ${decision.target.name} for ${damage} damage`,
+            this.#logView.addLogMessage(
+                `${this.#enemy.name} attacked ${decision.target.name} for ${damage} damage`,
             )
         }
 
-        this.gameModel.increaseRound()
-        this.combatModel.advanceTurn()
-        this.updateViews()
+        this.#gameModel.increaseRound()
+        this.#combatModel.advanceTurn()
+        this.#updateViews()
 
-        if (this.combatModel.checkBattleEnd()) {
-            this.isProcessingTurn = false
-            this.endGame()
+        if (this.#combatModel.checkBattleEnd()) {
+            this.#isProcessingTurn = false
+            this.#endGame()
         }
-        this.isProcessingTurn = false
+        this.#isProcessingTurn = false
     }
 
-    updateViews() {
-        const currentCombatant = this.combatModel.getCurrentCombatant()
+    #updateViews() {
+        const currentCombatant = this.#combatModel.getCurrentCombatant()
 
-        this.combatantView.updateCombatants([this.player, this.enemy])
+        this.#combatantView.updateCombatants([this.#player, this.#enemy])
 
-        this.statusView.updateRoundNumber(this.gameModel.getRoundNumber())
-        this.statusView.updateCurrentTurn(currentCombatant.name)
+        this.#statusView.updateRoundNumber(this.#gameModel.getRoundNumber())
+        this.#statusView.updateCurrentTurn(currentCombatant.name)
     }
 
-    endGame() {
-        if (this.aiTurnTimeout) {
-            clearTimeout(this.aiTurnTimeout)
-            this.aiTurnTimeout = null
+    #endGame() {
+        if (this.#aiTurnTimeout) {
+            clearTimeout(this.#aiTurnTimeout)
+            this.#aiTurnTimeout = null
         }
-        const winner = this.combatModel.getWinner()
+        const winner = this.#combatModel.getWinner()
 
-        this.gameModel.endGame(winner)
+        this.#gameModel.endGame(winner)
 
         if (winner === 'Player') {
-            this.logView.addLogMessage('You win!')
+            this.#logView.addLogMessage('You win!')
         } else if (winner === 'Enemy') {
-            this.logView.addLogMessage('You lose!')
+            this.#logView.addLogMessage('You lose!')
         }
     }
 }
