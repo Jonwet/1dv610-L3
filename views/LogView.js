@@ -1,6 +1,7 @@
 export default class LogView {
+    #logContainer
     constructor() {
-        this.logContainer = document.getElementById('combat-log')
+        this.#logContainer = document.getElementById('combat-log')
     }
 
     addLogMessage(message) {
@@ -8,16 +9,16 @@ export default class LogView {
         logEntry.className = 'log-entry'
         logEntry.textContent = message
 
-        this.logContainer.appendChild(logEntry)
+        this.#logContainer.appendChild(logEntry)
 
-        this.scrollToBottom()
+        this.#scrollToBottom()
     }
 
     clearLog() {
-        this.logContainer.innerHTML = ''
+        this.#logContainer.innerHTML = ''
     }
 
-    scrollToBottom() {
-        this.logContainer.scrollTop = this.logContainer.scrollHeight
+    #scrollToBottom() {
+        this.#logContainer.scrollTop = this.#logContainer.scrollHeight
     }
 }

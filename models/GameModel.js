@@ -1,34 +1,37 @@
 export default class GameModel {
+    #isActive
+    #roundNumber
+    #winner
     constructor() {
-        this.isActive = false
-        this.roundNumber = 0
-        this.winner = null
+        this.#isActive = false
+        this.#roundNumber = 0
+        this.#winner = null
     }
 
     startGame() {
-        this.isActive = true
-        this.roundNumber = 0
-        this.winner = null
+        this.#isActive = true
+        this.#roundNumber = 0
+        this.#winner = null
     }
 
     increaseRound() {
-        this.roundNumber++
+        this.#roundNumber++
     }
 
     endGame(winner) {
-        this.isActive = false
-        this.winner = winner
+        this.#isActive = false
+        this.#winner = winner
     }
 
     getRoundNumber() {
-        return this.roundNumber
+        return this.#roundNumber
     }
 
     getIsGameActive() {
-        return this.isActive
+        return this.#isActive
     }
 
     getWinner() {
-        return this.winner
+        return this.#winner
     }
 }

@@ -1,12 +1,14 @@
 export default class CombatantView {
+    #playerContainer
+    #enemyContainer
     constructor() {
-        this.playerContainer = document.getElementById('player-team')
-        this.enemyContainer = document.getElementById('enemy-team')
+        this.#playerContainer = document.getElementById('player-team')
+        this.#enemyContainer = document.getElementById('enemy-team')
     }
 
     renderCombatants(combatants) {
-        this.playerContainer.innerHTML = ''
-        this.enemyContainer.innerHTML = ''
+        this.#playerContainer.innerHTML = ''
+        this.#enemyContainer.innerHTML = ''
 
         const players = combatants.filter(
             (combatant) => combatant.team === 'Player',
@@ -16,17 +18,17 @@ export default class CombatantView {
         )
 
         players.forEach((combatant) => {
-            const combatantElement = this.createCombatantElement(combatant)
-            this.playerContainer.appendChild(combatantElement)
+            const combatantElement = this.#createCombatantElement(combatant)
+            this.#playerContainer.appendChild(combatantElement)
         })
 
         enemies.forEach((combatant) => {
-            const combatantElement = this.createCombatantElement(combatant)
-            this.enemyContainer.appendChild(combatantElement)
+            const combatantElement = this.#createCombatantElement(combatant)
+            this.#enemyContainer.appendChild(combatantElement)
         })
     }
 
-    createCombatantElement(combatant) {
+    #createCombatantElement(combatant) {
         const combatantElement = document.createElement('div')
         combatantElement.className = 'combatant-element'
         combatantElement.dataset.id = combatant.id
